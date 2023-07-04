@@ -2,6 +2,7 @@ import time
 import win32api
 import win32print
 
+''' 2727 - is name my printer for documents '''
 def printFile(file, printerName = '2727'):
     defaultPrinter = win32print.GetDefaultPrinter()
     if defaultPrinter != printerName:

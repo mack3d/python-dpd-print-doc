@@ -6,6 +6,7 @@ from fpdf import FPDF,HTMLMixin
 import datetime
 from printer import printFile
 
+''' all files are always on desktop '''
 file_location = "C://Users//Maciej//Desktop//"
 
 class MyFPDF(FPDF, HTMLMixin):
@@ -15,6 +16,7 @@ def searchfile():
     lista = os.listdir(path=file_location)
     test = 0
     for plik in lista:
+        ''' define name files '''
         if re.search("^zestawienie_COD_202.*xls$",plik):
             print(plik)
             readXls(plik)
@@ -44,42 +46,42 @@ def createpdf(plik,wplaty):
     pdf.set_font('DejaVu', '', 10)
     pdf.set_fill_color(220,220,220)
     wys = 6
-    bg = True
+    is_fill = True
     for wplata in wplaty:
-        if bg == True:
-            bg = False
+        if is_fill == True:
+            is_fill = False
         else:
-            bg = True
+            is_fill = True
         y = pdf.get_y()
         x = pdf.get_x()
 
         fpage = pdf.page_no()
-        pdf.multi_cell(40,wys,str(wplata[0]),fill = bg)
+        pdf.multi_cell(40,wys,str(wplata[0]),fill = is_fill)
 
         pdf.set_xy(x+20,y)
         if fpage < pdf.page_no():
             y = 10.00125
             pdf.set_xy(pdf.get_x(),y)
-        pdf.multi_cell(25,wys,str(wplata[1]),align = 'C',fill = bg)
+        pdf.multi_cell(25,wys,str(wplata[1]),align = 'C',fill = is_fill)
 
         pdf.set_xy(x+45,y)
-        pdf.multi_cell(80,wys,wplata[2],align = "L",fill = bg)
+        pdf.multi_cell(80,wys,wplata[2],align = "L",fill = is_fill)
         nexty = 0
         if pdf.get_y()-y > 7:
             nexty = pdf.get_y()
 
         pdf.set_xy(x+125,y)
-        pdf.multi_cell(90,wys,str(wplata[3])+" "+wplata[4]+" "+wplata[5], align = "L",fill = bg)
+        pdf.multi_cell(90,wys,str(wplata[3])+" "+wplata[4]+" "+wplata[5], align = "L",fill = is_fill)
         if pdf.get_y()-y > 7:
             nexty = pdf.get_y()
 
         pdf.set_xy(x+215,y)
-        pdf.multi_cell(25,wys,wplata[6].split(";")[0],fill = bg)
+        pdf.multi_cell(25,wys,wplata[6].split(";")[0],fill = is_fill)
         if pdf.get_y()-y > 7:
             nexty = pdf.get_y()
 
         pdf.set_xy(x+240,y)
-        pdf.multi_cell(25,wys,wplata[6].split(";")[2],fill = bg)
+        pdf.multi_cell(25,wys,wplata[6].split(";")[2],fill = is_fill)
         if pdf.get_y()-y > 7:
             nexty = pdf.get_y()
         
